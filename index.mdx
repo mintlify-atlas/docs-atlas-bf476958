@@ -1,97 +1,79 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "whisper(ml)x"
+description: "Fast, accurate automatic speech recognition on Apple Silicon — with word-level timestamps and speaker diarization."
 ---
 
-## Setting up
+whisper(ml)x is a Python library and CLI that brings Whisper-quality transcription to Apple Silicon at native speed. It replaces the standard Whisper backend with [mlx-whisper](https://github.com/ml-explore/mlx-examples/tree/main/whisper), running directly on the Apple Silicon GPU via unified memory — no CUDA required.
 
-Get your documentation site up and running in minutes.
+Beyond raw transcription, whisper(ml)x adds word-level timestamps through wav2vec2 forced alignment and speaker diarization via pyannote-audio, giving you a complete speech analysis pipeline in a single tool.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="Quick Start" icon="bolt" href="/quickstart">
+    Transcribe your first audio file in under five minutes.
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="Installation" icon="box" href="/installation">
+    Install with pip or uv and get set up on Apple Silicon.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="CLI Reference" icon="terminal" href="/cli/overview">
+    Explore every command-line flag and option.
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Python API" icon="code" href="/api/load-model">
+    Integrate transcription, alignment, and diarization into your code.
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## How it works
 
-Everything you need to create world-class documentation.
+whisper(ml)x runs a three-stage pipeline on your audio:
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+<Steps>
+  <Step title="VAD — Voice Activity Detection">
+    Audio is preprocessed using pyannote or silero VAD to detect speech segments, skipping silence and reducing inference time.
+  </Step>
+  <Step title="ASR — Transcription">
+    Each speech segment is transcribed using mlx-whisper, which runs natively on the Apple Silicon GPU via MLX's unified memory architecture.
+  </Step>
+  <Step title="Alignment + Diarization (optional)">
+    Word-level timestamps are computed using wav2vec2 forced alignment. Speaker labels are assigned via pyannote-audio diarization.
+  </Step>
+</Steps>
 
-## Need inspiration?
+## Key features
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<CardGroup cols={2}>
+  <Card title="Apple Silicon native" icon="microchip">
+    MLX inference runs on the M-series GPU automatically — no device configuration needed for transcription.
+  </Card>
+  <Card title="Word-level timestamps" icon="clock">
+    Forced alignment via wav2vec2 gives you precise start and end times for every word.
+  </Card>
+  <Card title="Speaker diarization" icon="users">
+    Identify who spoke when using pyannote-audio's speaker diarization pipeline.
+  </Card>
+  <Card title="30+ languages" icon="language">
+    Alignment models are available for over 30 languages, from English and Japanese to Arabic and Indonesian.
+  </Card>
+  <Card title="CLI and Python API" icon="terminal">
+    Use whispermlx from the command line or import it directly into your Python application.
+  </Card>
+  <Card title="Multiple output formats" icon="file-export">
+    Export transcripts as SRT, VTT, TXT, TSV, JSON, or all formats at once.
+  </Card>
+</CardGroup>
+
+## Explore the docs
+
+<CardGroup cols={2}>
+  <Card title="Pipeline concepts" icon="diagram-project" href="/concepts/pipeline">
+    Understand the VAD → ASR → Alignment → Diarization architecture.
+  </Card>
+  <Card title="Model reference" icon="brain" href="/concepts/models">
+    Learn about available Whisper models and how short names are resolved.
+  </Card>
+  <Card title="Transcription guide" icon="microphone" href="/guides/transcription">
+    Transcribe audio files using both the CLI and Python API.
+  </Card>
+  <Card title="Diarization guide" icon="user-group" href="/guides/diarization">
+    Add speaker labels to your transcripts with pyannote-audio.
+  </Card>
+</CardGroup>
